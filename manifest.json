@@ -1,9 +1,8 @@
 {
-  "version": 1,
-  "amhs": [
-    { "name": "EMERGENCY PROTOCOL", "fileName": "emergency.pdf" }
-  ],
-  "aim": [
-    { "name": "FLIGHT PLAN GUIDE", "fileName": "flight_plan.html" }
-  ]
+  "amhs": [],
+  "aim": [],
+  "dvolmet": [],
+  "dlink": [],
+  "dtn": [],
+  "ups": []
 }
