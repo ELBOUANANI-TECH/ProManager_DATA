@@ -1,6 +1,7 @@
 {
   "amhs": [
         { "name": "AI DADA", "fileName": "AI_Data_App_Roadmap_Detailed.pdf" }
+        { "name": "AFTN MSG", "fileName": "aftn_messages.db" }
   ],
   "aim": [],
   "dvolmet": [],
