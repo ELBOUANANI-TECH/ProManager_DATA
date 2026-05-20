@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change User Password - Domain Controller</title>
+    <style>
+        /* Mobile-first responsive design */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: #f5f8fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 15px;
+            font-size: 16px;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #0078d4;
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #0078d4;
+            font-size: 1.8em;
+        }
+        
+        h2 {
+            color: #005a9e;
+            margin: 20px 0 15px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e1e8ed;
+            font-size: 1.4em;
+        }
+        
+        h3 {
+            color: #0078d4;
+            margin: 18px 0 12px 0;
+            font-size: 1.2em;
+        }
+        
+        /* Step styles */
+        .step {
+            background: #f8fafc;
+            border-left: 4px solid #0078d4;
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: #0078d4;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 12px;
+            font-size: 0.95em;
+        }
+        
+        .step-content {
+            display: inline-block;
+            width: calc(100% - 45px);
+            vertical-align: top;
+        }
+        
+        /* Connection info styles */
+        .connection-info {
+            background: #f0f7ff;
+            border: 1px solid #c7e0f4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .info-row {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #005a9e;
+            min-width: 100px;
+            margin-right: 10px;
+        }
+        
+        .info-value {
+            color: #333;
+            flex: 1;
+            word-break: break-word;
+        }
+        
+        /* Form styles */
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1em;
+            background: white;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #0078d4;
+            box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+        }
+        
+        /* Checkbox styles */
+        .checkbox-group {
+            margin: 15px 0;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .checkbox-group input {
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+        
+        .checkbox-label {
+            flex: 1;
+            line-height: 1.5;
+        }
+        
+        /* Button styles */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            font-weight: 500;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            background: #106ebe;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        /* Server manager styles */
+        .server-manager {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .menu-list {
+            list-style: none;
+            margin-top: 10px;
+        }
+        
+        .menu-item {
+            padding: 10px;
+            border-bottom: 1px solid #e9ecef;
+            cursor: pointer;
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .menu-item:hover {
+            background-color: #e7f3ff;
+        }
+        
+        .menu-item.active {
+            background-color: #d1ecff;
+            border-left: 3px solid #0078d4;
+            font-weight: 500;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+                font-size: 15px;
+            }
+            
+            .card {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.6em;
+            }
+            
+            h2 {
+                font-size: 1.3em;
+            }
+            
+            .info-row {
+                flex-direction: column;
+            }
+            
+            .info-label {
+                min-width: auto;
+                margin-bottom: 5px;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.95em;
+            }
+        }
+        
+        /* Highlighted text */
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+            color: #856404;
+        }
+        
+        .code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            background: #f1f3f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #c7254e;
+            font-size: 0.95em;
+        }
+        
+        /* Separator */
+        .separator {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #0078d4, transparent);
+            margin: 25px 0;
+            width: 100%;
+        }
+        
+        /* Status indicator */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+            margin: 5px 0;
+        }
+        
+        .status-unlocked {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-locked {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Change User Password - Domain Controller</h1>
+            
+            <div class="separator"></div>
+            
+            <h2>1. Remote Desktop Access to Server</h2>
+            
+            <div class="connection-info">
+                <div class="info-row">
+                    <span class="info-label">Server:</span>
+                    <span class="info-value code">172.21.31.180</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Username:</span>
+                    <span class="info-value">ONDAIDS\idsuser</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Password:</span>
+                    <span class="info-value">123Ondapass</span>
+                </div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                    Open <span class="highlight">Remote Desktop Connection</span> on your computer
+                </div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                    Enter the server address: <span class="code">172.21.31.180</span>
+                </div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">3</span>
+                <div class="step-content">
+                    When prompted for credentials, enter:
+                    <div style="margin-top: 10px;">
+                        <div class="form-group">
+                            <div class="form-label">Username:</div>
+                            <div class="form-input">ONDAIDS\idsuser</div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-label">Password:</div>
+                            <div class="form-input">123Ondapass</div>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="remember" checked>
+                            <label for="remember" class="checkbox-label">Remember credentials</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn">Connect</button>
+                <button class="btn btn-secondary">Show Options</button>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>2. Access Active Directory Users and Computers</h2>
+            
+            <div class="step">
+                <span class="step-number">4</span>
+                <div class="step-content">
+                    From the Server Manager dashboard, click on <span class="highlight">Tools</span>
+                </div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">5</span>
+                <div class="step-content">
+                    Select <span class="highlight">Active Directory Users and Computers</span> from the Tools menu
+                </div>
+            </div>
+            
+            <div class="server-manager">
+                <h3>Server Manager Tools Menu</h3>
+                <ul class="menu-list">
+                    <li class="menu-item">Active Directory Administrative Center</li>
+                    <li class="menu-item">Active Directory Domains and Trusts</li>
+                    <li class="menu-item">Active Directory Module for Windows PowerShell</li>
+                    <li class="menu-item active">Active Directory Users and Computers</li>
+                    <li class="menu-item">DNS</li>
+                    <li class="menu-item">Group Policy Management</li>
+                    <li class="menu-item">Event Viewer</li>
+                    <li class="menu-item">Services</li>
+                    <li class="menu-item">Task Scheduler</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>3. Reset User Password</h2>
+            
+            <div class="step">
+                <span class="step-number">6</span>
+                <div class="step-content">
+                    In the <span class="highlight">Active Directory Users and Computers</span> console, navigate to the user account
+                </div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">7</span>
+                <div class="step-content">
+                    Right-click on the user account and select <span class="highlight">Reset Password</span>
+                </div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">8</span>
+                <div class="step-content">
+                    Enter the new password in the Reset Password dialog:
+                    <div style="margin-top: 15px;">
+                        <div class="form-group">
+                            <div class="form-label">New Password:</div>
+                            <input type="password" class="form-input" placeholder="Enter new password">
+                        </div>
+                        <div class="form-group">
+                            <div class="form-label">Confirm Password:</div>
+                            <input type="password" class="form-input" placeholder="Confirm new password">
+                        </div>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="changeAtNextLogin" checked>
+                            <label for="changeAtNextLogin" class="checkbox-label">
+                                <strong>User must change password at next logon</strong><br>
+                                <small>The user must logoff and then logon again for the change to take effect.</small>
+                            </label>
+                        </div>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="unlockAccount">
+                            <label for="unlockAccount" class="checkbox-label">Unlock the user's account</label>
+                        </div>
+                        
+                        <div style="margin: 15px 0;">
+                            <div class="status-indicator status-unlocked">
+                                Account Lockout Status on this Domain Controller: Unlocked
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn">OK</button>
+                <button class="btn btn-secondary">Cancel</button>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <div class="step">
+                <span class="step-number">9</span>
+                <div class="step-content">
+                    <strong>Important:</strong> If you checked "User must change password at next logon", inform the user that they will need to:
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li>Log off their current session</li>
+                        <li>Log back in with the temporary password</li>
+                        <li>Change to a new password immediately</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">10</span>
+                <div class="step-content">
+                    <strong>Verification:</strong> Confirm with the user that they can successfully log in with the new password
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>Quick Reference</h2>
+            
+            <div class="connection-info">
+                <div class="info-row">
+                    <span class="info-label">Domain Controller:</span>
+                    <span class="info-value">172.21.31.180</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Admin Account:</span>
+                    <span class="info-value">ONDAIDS\idsuser</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Tool Path:</span>
+                    <span class="info-value">Server Manager → Tools → Active Directory Users and Computers</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Password Policy:</span>
+                    <span class="info-value">Ensure new password meets domain complexity requirements</span>
+                </div>
+            </div>
+            
+            <div class="btn-group" style="margin-top: 20px;">
+                <button class="btn">Print Guide</button>
+                <button class="btn btn-secondary">Save as PDF</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Simple interactivity for demonstration purposes
+        document.addEventListener('DOMContentLoaded', function() {
+            // Make menu items clickable
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Form validation simulation
+            const formInputs = document.querySelectorAll('.form-input');
+            formInputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.style.backgroundColor = '#fffef0';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.style.backgroundColor = 'white';
+                });
+            });
+            
+            // Connect button simulation
+            const connectBtn = document.querySelector('.btn');
+            connectBtn.addEventListener('click', function() {
+                alert('Connecting to 172.21.31.180...');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un utilisateur Aerodb au domaine AIM</title>
+    <style>
+        /* Styles généraux pour mobile */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f3f6fa;
+            color: #222;
+            line-height: 1.6;
+            padding: 15px;
+            font-size: 16px;
+        }
+        
+        .content {
+            background: #ffffff;
+            padding: 25px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #0074cc;
+            border-bottom: 3px solid #0074cc;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            letter-spacing: 0.5px;
+        }
+        
+        h2 {
+            color: #0056b3;
+            margin: 25px 0 15px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e8f0ff;
+            font-size: 1.4em;
+        }
+        
+        h3 {
+            color: #0074cc;
+            margin: 20px 0 12px 0;
+            font-size: 1.2em;
+        }
+        
+        /* Styles pour les étapes */
+        .step {
+            background: #f8fafd;
+            border-left: 4px solid #0074cc;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: #0074cc;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 0.9em;
+        }
+        
+        .step-content {
+            display: inline-block;
+            width: calc(100% - 40px);
+            vertical-align: top;
+        }
+        
+        /* Styles pour les éléments de code et commandes */
+        code {
+            background: #e8f0ff;
+            color: #003366;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 0.95em;
+            display: inline-block;
+            margin: 3px 0;
+            word-break: break-word;
+        }
+        
+        .command-box {
+            background: #f0f7ff;
+            border: 1px solid #b8d4ff;
+            padding: 12px 15px;
+            margin: 12px 0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        
+        /* Styles pour les notes et avertissements */
+        .note-box {
+            background: #f0f7ff;
+            border: 1px solid #b8d4ff;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-size: 0.95em;
+            color: #003366;
+        }
+        
+        .warning-box {
+            background: #fff3e0;
+            border: 1px solid #ffcc80;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-size: 0.95em;
+            color: #663c00;
+        }
+        
+        /* Styles pour les éléments interactifs */
+        .key-combo {
+            display: inline-block;
+            background: #e9ecef;
+            border: 1px solid #ced4da;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+            margin: 2px 1px;
+        }
+        
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 500;
+            color: #856404;
+        }
+        
+        /* Styles pour les liens */
+        a {
+            color: #0074cc;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Styles pour les listes */
+        ul, ol {
+            margin: 10px 0 10px 25px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* Styles pour les séparateurs */
+        .section-separator {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #0074cc, transparent);
+            margin: 30px 0;
+            width: 100%;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+                font-size: 15px;
+            }
+            
+            .content {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 1.6em;
+            }
+            
+            h2 {
+                font-size: 1.3em;
+            }
+            
+            .command-box {
+                font-size: 0.9em;
+                padding: 10px 12px;
+            }
+        }
+        
+        /* Styles pour les fenêtres simulées (simplifiées pour mobile) */
+        .window-simulation {
+            border: 1px solid #ddd;
+            background: #f9f9f9;
+            margin: 15px 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .window-title {
+            background: linear-gradient(to right, #0a246a, #1a3a8a);
+            color: white;
+            padding: 10px 15px;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+        
+        .window-content {
+            padding: 15px;
+            background: white;
+        }
+        
+        /* Styles pour les champs de formulaire */
+        .form-field {
+            margin-bottom: 12px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #333;
+            font-size: 0.95em;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1em;
+            background: white;
+        }
+        
+        .radio-group {
+            margin: 10px 0;
+        }
+        
+        .radio-option {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .radio-option input {
+            margin-right: 8px;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .footer p {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Ajouter un utilisateur Aerodb au domaine AIM</h1>
+        <p><strong>Domaine :</strong> <code>ondaids.local</code></p>
+        
+        <div class="section-separator"></div>
+        
+        <h2>1. Enlever la position de l'ancien domaine</h2>
+        
+        <div class="step">
+            <span class="step-number">1</span>
+            <div class="step-content">
+                Appuyez sur <span class="key-combo">Windows + r</span>, tapez <code>sysdm.cpl</code> et appuyez sur Entrée.
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">2</span>
+            <div class="step-content">
+                Cliquez sur le bouton <strong>Modifier</strong> dans l'onglet « Nom de l'ordinateur ».
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">3</span>
+            <div class="step-content">
+                Sélectionnez <strong>Groupe de travail</strong> et entrez <code>WORKGROUP</code>.
+            </div>
+        </div>
+        
+        <div class="window-simulation">
+            <div class="window-title">Computer Name/Domain Changes</div>
+            <div class="window-content">
+                <div class="form-field">
+                    <div class="form-label">Workgroup:</div>
+                    <div class="form-input">WORKGROUP</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">4</span>
+            <div class="step-content">
+                Cliquez sur OK, confirmez et <strong>redémarrez l'ordinateur</strong>.
+            </div>
+        </div>
+        
+        <div class="note-box">
+            Il vous sera demandé de redémarrer l'ordinateur afin que les modifications puissent être appliquées.
+        </div>
+        
+        <div class="section-separator"></div>
+        
+        <h2>2. Modifier l'adresse DNS</h2>
+        
+        <div class="note-box">
+            Chaque position est connectée via deux cartes réseau. Pour éviter un conflit d'adresse, allouez à la deuxième carte une adresse IP via DHCP.
+        </div>
+        
+        <h3>Étape 1 : Accéder aux paramètres réseau</h3>
+        
+        <div class="step">
+            <span class="step-number">1</span>
+            <div class="step-content">
+                Menu Démarrer > Paramètres > Réseau et Internet.
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">2</span>
+            <div class="step-content">
+                Cliquez sur <code>Modifier les options de l'adaptateur</code> (Paramètres réseau avancés).
+            </div>
+        </div>
+        
+        <h3>Étape 2 : Configurer les propriétés réseau</h3>
+        
+        <div class="step">
+            <span class="step-number">3</span>
+            <div class="step-content">
+                Cliquez droit sur votre carte active > <strong>Propriétés</strong>.
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">4</span>
+            <div class="step-content">
+                Sélectionnez <code>Internet Protocol Version 4 (TCP/IPv4)</code> > Propriétés.
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">5</span>
+            <div class="step-content">
+                Cliquez sur <strong>Utiliser les adresses de serveur DNS suivantes</strong> et entrez :
+                <div class="form-field" style="margin-top: 10px;">
+                    <div class="form-label">DNS préféré :</div>
+                    <div class="form-input">172.21.31.180</div>
+                </div>
+                <div class="form-field">
+                    <div class="form-label">DNS alternatif :</div>
+                    <div class="form-input">172.21.31.180</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">6</span>
+            <div class="step-content">
+                <strong>Redémarrer l'ordinateur</strong>.
+            </div>
+        </div>
+        
+        <div class="section-separator"></div>
+        
+        <h2>3. Ajouter la position au nouveau domaine</h2>
+        
+        <div class="step">
+            <span class="step-number">1</span>
+            <div class="step-content">
+                Suivre les mêmes étapes que la première partie jusqu'au point où on doit entrer le nom du domaine <code>ondaids.local</code>.
+            </div>
+        </div>
+        
+        <div class="window-simulation">
+            <div class="window-title">Computer Name/Domain Changes</div>
+            <div class="window-content">
+                <div class="form-field">
+                    <div class="form-label">Domain:</div>
+                    <div class="form-input">ondaids.local</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">2</span>
+            <div class="step-content">
+                Entrez les informations d'identification du domaine :
+                <div class="form-field" style="margin-top: 10px;">
+                    <div class="form-label">Nom d'utilisateur :</div>
+                    <div class="form-input">idsuser</div>
+                </div>
+                <div class="form-field">
+                    <div class="form-label">Mot de passe :</div>
+                    <div class="form-input">123Ondapass</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">3</span>
+            <div class="step-content">
+                Cliquez droit sur Démarrer > <code>Computer management</code>.
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">4</span>
+            <div class="step-content">
+                Accédez à <code>Utilisateurs et groupes locaux</code> et ajoutez l'utilisateur <code>Ondaids\lamuser</code> au groupe <code>Administrateurs</code>.
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">5</span>
+            <div class="step-content">
+                Vérifiez les informations d'identification du domaine : <code>idsuser/123Ondapass</code>.
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">6</span>
+            <div class="step-content">
+                <strong>Redémarrer l'ordinateur</strong>.
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">7</span>
+            <div class="step-content">
+                <strong>Se connecter avec le nouvel utilisateur</strong>.
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">8</span>
+            <div class="step-content">
+                <strong>Connecter l'utilisateur de la position à la base de données</strong>.
+            </div>
+        </div>
+        
+        <div class="section-separator"></div>
+        
+        <h2>4. Connexion à la base de données</h2>
+        
+        <div class="step">
+            <span class="step-number">a</span>
+            <div class="step-content">
+                Ouvrir la console cmd et taper :
+                <div class="command-box">cd \ids\DAF\Startup\</div>
+                <div class="command-box">AddAdministrator.bat USER_ID USER_ID TNS_SERVICE_NAME</div>
+                
+                <div class="note-box">
+                    Les user ID et TNS Service Name viennent du chemin suivant :<br>
+                    Menu démarrer > ODBC Data Sources > Sources de données système > ONDA
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">b</span>
+            <div class="step-content">
+                Explorateur de fichiers > Cliquez droit sur Ce PC > Connecter un lecteur réseau :
+                <ul style="margin-top: 10px;">
+                    <li>Lecteur : <code>O:</code></li>
+                    <li>Dossier : <code>\\172.21.31.67\license</code></li>
+                    <li>Identifiants : <code>idsuser/1230ndapass</code></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Procédure technique - Ajout d'utilisateur Aerodb au domaine AIM « ondaids.local »</p>
+            <p>Documentation système | Version 1.0</p>
+        </div>
+    </div>
+</body>
+</html>
