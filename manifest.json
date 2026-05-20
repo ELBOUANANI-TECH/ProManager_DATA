@@ -3,7 +3,9 @@
         { "name": "AI DADA", "fileName": "AI_Data_App_Roadmap_Detailed.pdf" },
         { "name": "AFTN MSG", "fileName": "aftn_messages.db" }
   ],
-  "aim": [],
+  "aim": [
+    { "name": "Access CRONOS", "fileName": "Access_CRONOS_externe.html" }
+  ],
   "dvolmet": [],
   "dlink": [],
   "dtn": [],
