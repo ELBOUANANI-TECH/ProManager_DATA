@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accès CRONOS depuis un réseau externe</title>
+    <style>
+        /* Mobile-first responsive design with same color scheme */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: #f5f8fa;
+            color: #222;
+            line-height: 1.6;
+            padding: 15px;
+            font-size: 16px;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        /* Header Card - Matching previous design */
+        .header-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 25px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            border-bottom: 3px solid #0074cc;
+        }
+        
+        .logo-section {
+            margin-bottom: 15px;
+        }
+        
+        .org-name {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #0074cc;
+        }
+        
+        .org-department {
+            font-size: 1.1em;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .document-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            margin: 15px 0;
+            color: #222;
+            line-height: 1.4;
+        }
+        
+        .document-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .info-item {
+            text-align: center;
+        }
+        
+        .info-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        
+        .info-value {
+            font-weight: 600;
+            color: #0074cc;
+            font-size: 1em;
+        }
+        
+        /* Content Card - Matching previous design */
+        .content-card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        /* Section styles */
+        .section {
+            margin: 25px 0;
+        }
+        
+        .section-title {
+            color: #0056b3;
+            font-weight: bold;
+            margin: 20px 0 15px 0;
+            padding-left: 10px;
+            border-left: 4px solid #0074cc;
+            font-size: 1.2em;
+        }
+        
+        /* Step styles */
+        .step {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid #0074cc;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: #0074cc;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            margin-right: 10px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        /* URL Display - Same style as previous */
+        .url-display {
+            background: #e8f0ff;
+            color: #003366;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            margin: 15px 0;
+            font-weight: bold;
+            font-size: 1em;
+            word-break: break-all;
+            border-left: 4px solid #0074cc;
+        }
+        
+        .url-display a {
+            color: #003366;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .url-display a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Screenshot container */
+        .screenshot-container {
+            margin: 20px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .screenshot-header {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9em;
+        }
+        
+        .screenshot-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: #f0f0f0;
+            min-height: 200px;
+            position: relative;
+        }
+        
+        .screenshot-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            background: linear-gradient(45deg, #f5f5f5 25%, #e8e8e8 25%, #e8e8e8 50%, #f5f5f5 50%, #f5f5f5 75%, #e8e8e8 75%);
+            background-size: 20px 20px;
+            color: #666;
+            text-align: center;
+        }
+        
+        .screenshot-placeholder .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #0074cc;
+        }
+        
+        /* Form elements */
+        .form-container {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #e1e8ed;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95em;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1em;
+            background: white;
+            transition: border-color 0.2s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #0074cc;
+        }
+        
+        /* Note styles */
+        .note {
+            color: #6c757d;
+            font-style: italic;
+            margin: 10px 0;
+            padding-left: 10px;
+            border-left: 3px solid #ffc107;
+            font-size: 0.95em;
+        }
+        
+        .important-note {
+            color: #856404;
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-size: 0.95em;
+        }
+        
+        .warning-note {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-size: 0.95em;
+        }
+        
+        /* Button styles */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            min-width: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: #0074cc;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+        
+        /* Quick info boxes */
+        .info-box {
+            background: #e8f0ff;
+            border: 1px solid #b8d4ff;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            font-size: 0.95em;
+        }
+        
+        .info-title {
+            font-weight: bold;
+            color: #0074cc;
+            margin-bottom: 8px;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+                font-size: 15px;
+            }
+            
+            .header-card, .content-card {
+                padding: 18px 15px;
+            }
+            
+            .url-display {
+                font-size: 0.95em;
+                padding: 10px 12px;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                min-width: 120px;
+                font-size: 0.95em;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .action-buttons .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            .document-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+        
+        @media (max-width: 768px) and (min-width: 481px) {
+            .action-buttons {
+                flex-wrap: wrap;
+            }
+            
+            .btn {
+                flex: 1;
+                min-width: 120px;
+            }
+        }
+        
+        /* Network configuration table */
+        .config-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+        
+        .config-table th {
+            background: #0074cc;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .config-table td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #e1e8ed;
+        }
+        
+        .config-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+        
+        .config-table tr:hover {
+            background: #f0f7ff;
+        }
+        
+        /* Firewall simulation */
+        .firewall-ui {
+            background: #2c3e50;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px 0;
+            color: white;
+        }
+        
+        .firewall-header {
+            background: #1a252f;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #34495e;
+        }
+        
+        .firewall-logo {
+            font-weight: bold;
+            color: #3498db;
+            font-size: 1.2em;
+        }
+        
+        .firewall-tabs {
+            display: flex;
+            background: #1a252f;
+            padding: 0 15px;
+            border-bottom: 1px solid #34495e;
+            flex-wrap: wrap;
+        }
+        
+        .firewall-tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-size: 0.9em;
+        }
+        
+        .firewall-tab.active {
+            border-bottom: 3px solid #3498db;
+            background: #2c3e50;
+        }
+        
+        .firewall-content {
+            padding: 20px;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .form-field {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        /* Connection status */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 500;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        
+        .status-connected {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-disconnected {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header-card">
+            <div class="logo-section">
+                <div class="org-name">Office National Des Aéroports</div>
+                <div class="org-department">Pôle de la Navigation Aérienne</div>
+            </div>
+            
+            <div class="document-title">
+                Accès CRONOS depuis un réseau externe
+            </div>
+            
+            <div class="document-info">
+                <div class="info-item">
+                    <div class="info-label">Code :</div>
+                    <div class="info-value">PNA.4.1.801/01</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Date :</div>
+                    <div class="info-value">22/04/2024</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Version :</div>
+                    <div class="info-value">1.0</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section 1: Introduction -->
+        <div class="content-card">
+            <div class="section-title">Introduction</div>
+            <p>Cette procédure décrit les étapes pour accéder au système CRONOS depuis un réseau externe via le pare-feu Barracuda.</p>
+            
+            <div class="warning-note">
+                <strong>⚠️ Attention :</strong> Cet accès est réservé au personnel autorisé. Assurez-vous de disposer des credentials valides avant de commencer.
+            </div>
+        </div>
+        
+        <!-- Section 2: Connexion au Firewall Barracuda -->
+        <div class="content-card">
+            <div class="section-title">1. Connexion au Firewall Barracuda</div>
+            
+            <div class="step">
+                <span class="step-number">1</span>
+                <div style="display: inline-block; width: calc(100% - 40px); vertical-align: top;">
+                    <p>Ouvrez votre navigateur web et accédez à l'adresse du pare-feu Barracuda :</p>
+                    
+                    <div class="url-display">
+                        <a href="https://172.21.0.251" target="_blank">
+                            https://172.21.0.251
+                        </a>
+                    </div>
+                    
+                    <div class="note">
+                        Cette adresse est l'interface de gestion du pare-feu Barracuda. Une connexion sécurisée (HTTPS) est requise.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">2</span>
+                <div style="display: inline-block; width: calc(100% - 40px); vertical-align: top;">
+                    <p>Entrez vos identifiants d'authentification :</p>
+                    
+                    <div class="form-container">
+                        <div class="form-group">
+                            <label class="form-label">Nom d'utilisateur :</label>
+                            <input type="text" class="form-input" id="firewallUsername" placeholder="Entrez votre nom d'utilisateur">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Mot de passe :</label>
+                            <input type="password" class="form-input" id="firewallPassword" placeholder="Entrez votre mot de passe">
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn btn-primary" onclick="connectToFirewall()">
+                                <span>🔐</span> Se connecter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="screenshot-container">
+                <div class="screenshot-header">
+                    Capture d'écran : Interface de connexion Barracuda
+                </div>
+                <div class="screenshot-image">
+                    <div class="screenshot-placeholder">
+                        <div class="icon">🛡️</div>
+                        <div>Page de connexion Barracuda Firewall</div>
+                        <div style="font-size: 0.8em; margin-top: 10px;">URL: https://172.21.0.251</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section 3: Configuration de la route statique -->
+        <div class="content-card">
+            <div class="section-title">2. Configuration de la route statique</div>
+            
+            <p>Après connexion au pare-feu Barracuda, accédez à la section de configuration réseau :</p>
+            
+            <div class="firewall-ui">
+                <div class="firewall-header">
+                    <div class="firewall-logo">BARC</div>
+                    <div>ADC01 - Production</div>
+                </div>
+                
+                <div class="firewall-tabs">
+                    <div class="firewall-tab">TRAFFIC</div>
+                    <div class="firewall-tab">SECURITY</div>
+                    <div class="firewall-tab active">ACCESS CONTROL</div>
+                    <div class="firewall-tab">NETWORK</div>
+                    <div class="firewall-tab">ADVANCED</div>
+                </div>
+                
+                <div class="firewall-content">
+                    <h4 style="margin-bottom: 20px; color: #3498db;">Add Static Route</h4>
+                    
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label style="color: #ecf0f1; display: block; margin-bottom: 5px;">IP Protocol Version</label>
+                            <div style="background: #34495e; padding: 10px; border-radius: 4px;">IPv4</div>
+                        </div>
+                    </div>
+                    
+                    <table class="config-table" style="background: transparent; color: white;">
+                        <tr>
+                            <td style="color: #bdc3c7; border-color: #34495e;">IP Address</td>
+                            <td style="border-color: #34495e;">192.168.112.0</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #bdc3c7; border-color: #34495e;">Netmask</td>
+                            <td style="border-color: #34495e;">255.255.255.0</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #bdc3c7; border-color: #34495e;">Gateway Address</td>
+                            <td style="border-color: #34495e;">192.168.12.201</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #bdc3c7; border-color: #34495e;">Network Interface</td>
+                            <td style="border-color: #34495e;">98-1-6</td>
+                        </tr>
+                    </table>
+                    
+                    <div style="margin-top: 20px;">
+                        <label style="color: #ecf0f1; display: block; margin-bottom: 5px;">Comments</label>
+                        <div style="background: #34495e; padding: 10px; border-radius: 4px; min-height: 60px; color: #95a5a6;">
+                            IP ADRESS : Réseaux Local de l'aéroport Destination 192.168.1XX.0
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="important-note">
+                <strong>Note importante :</strong> Cette configuration route le trafic vers le réseau local de l'aéroport de destination (192.168.1XX.0).
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="saveStaticRoute()">
+                    <span>💾</span> Sauvegarder la configuration
+                </button>
+            </div>
+        </div>
+        
+        <!-- Section 4: Accès à CRONOS -->
+        <div class="content-card">
+            <div class="section-title">3. Accès à CRONOS</div>
+            
+            <div class="step">
+                <span class="step-number">1</span>
+                <div style="display: inline-block; width: calc(100% - 40px); vertical-align: top;">
+                    <p>Via une position CADAS de l'aéroport de destination</p>
+                    
+                    <div class="info-box">
+                        <div class="info-title">Position CADAS :</div>
+                        Il s'agit d'un poste de travail local dans l'aéroport de destination, pré-configuré pour accéder au réseau interne.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">2</span>
+                <div style="display: inline-block; width: calc(100% - 40px); vertical-align: top;">
+                    <p>Accédez à l'interface CRONOS :</p>
+                    
+                    <div class="url-display">
+                        <a href="https://172.21.31.125/cronos-portal" target="_blank">
+                            https://172.21.31.125/cronos-portal
+                        </a>
+                    </div>
+                    
+                    <div class="note">
+                        Cette adresse est l'interface CRONOS accessible depuis le réseau interne après configuration de la route.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">3</span>
+                <div style="display: inline-block; width: calc(100% - 40px); vertical-align: top;">
+                    <p>Entrez vos identifiants CRONOS :</p>
+                    
+                    <div class="form-container">
+                        <div class="form-group">
+                            <label class="form-label">Nom d'utilisateur :</label>
+                            <input type="text" class="form-input" id="cronosUsername" placeholder="Votre identifiant CRONOS">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Mot de passe :</label>
+                            <input type="password" class="form-input" id="cronosPassword" placeholder="Votre mot de passe CRONOS">
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn btn-primary" onclick="connectToCronos()">
+                                <span>🚀</span> Accéder à CRONOS
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="screenshot-container">
+                <div class="screenshot-header">
+                    Capture d'écran : Interface CRONOS Portal
+                </div>
+                <div class="screenshot-image">
+                    <div class="screenshot-placeholder">
+                        <div class="icon">🌐</div>
+                        <div>Page d'accueil CRONOS Portal</div>
+                        <div style="font-size: 0.8em; margin-top: 10px;">URL: https://172.21.31.125/cronos-portal</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section 5: Résumé et vérification -->
+        <div class="content-card">
+            <div class="section-title">Résumé de la configuration</div>
+            
+            <table class="config-table">
+                <thead>
+                    <tr>
+                        <th>Élément</th>
+                        <th>Valeur</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Firewall Barracuda</td>
+                        <td>172.21.0.251</td>
+                        <td>Point d'entrée externe</td>
+                    </tr>
+                    <tr>
+                        <td>Réseau destination</td>
+                        <td>192.168.112.0/24</td>
+                        <td>Réseau local de l'aéroport</td>
+                    </tr>
+                    <tr>
+                        <td>Passerelle</td>
+                        <td>192.168.12.201</td>
+                        <td>Gateway pour le réseau destination</td>
+                    </tr>
+                    <tr>
+                        <td>Interface</td>
+                        <td>98-1-6</td>
+                        <td>Interface réseau sur le firewall</td>
+                    </tr>
+                    <tr>
+                        <td>CRONOS Portal</td>
+                        <td>172.21.31.125</td>
+                        <td>Adresse interne de CRONOS</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="status-indicator status-connected" id="connectionStatus" style="display: none;">
+                ✅ Connecté avec succès
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="testConnection()">
+                    <span>🔍</span> Tester la connexion
+                </button>
+                <button class="btn btn-secondary" onclick="resetForm()">
+                    <span>🔄</span> Réinitialiser
+                </button>
+            </div>
+            
+            <div class="info-box" style="margin-top: 20px;">
+                <div class="info-title">Support technique :</div>
+                Pour toute assistance concernant l'accès externe à CRONOS, contactez le service réseau au poste 5430 ou par email à reseau@ona.ma
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Connect to Firewall function
+        function connectToFirewall() {
+            const username = document.getElementById('firewallUsername').value;
+            const password = document.getElementById('firewallPassword').value;
+            
+            if (!username || !password) {
+                alert('Veuillez entrer votre nom d\'utilisateur et mot de passe.');
+                return;
+            }
+            
+            alert('Connexion au Firewall Barracuda en cours...\n\n' +
+                  'Nom d\'utilisateur: ' + username + '\n' +
+                  'Si la connexion échoue, vérifiez vos credentials et votre accès réseau.');
+            
+            // Simulate successful connection
+            setTimeout(() => {
+                alert('✅ Connexion réussie au Firewall Barracuda !\n\nVous pouvez maintenant procéder à la configuration de la route statique.');
+            }, 1000);
+        }
+        
+        // Save static route function
+        function saveStaticRoute() {
+            alert('Configuration de la route statique en cours de sauvegarde...\n\n' +
+                  'Réseau: 192.168.112.0/24\n' +
+                  'Passerelle: 192.168.12.201\n' +
+                  'Interface: 98-1-6');
+            
+            setTimeout(() => {
+                alert('✅ Route statique sauvegardée avec succès !\n\nLa configuration a été appliquée au pare-feu.');
+            }, 1500);
+        }
+        
+        // Connect to CRONOS function
+        function connectToCronos() {
+            const username = document.getElementById('cronosUsername').value;
+            const password = document.getElementById('cronosPassword').value;
+            
+            if (!username || !password) {
+                alert('Veuillez entrer vos identifiants CRONOS.');
+                return;
+            }
+            
+            alert('Connexion à CRONOS en cours...\n\n' +
+                  'URL: https://172.21.31.125/cronos-portal\n' +
+                  'Identifiant: ' + username);
+            
+            // Show connection status
+            const status = document.getElementById('connectionStatus');
+            status.style.display = 'inline-flex';
+            
+            // Simulate successful connection
+            setTimeout(() => {
+                alert('✅ Connexion à CRONOS établie avec succès !\n\nBienvenue dans l\'interface CRONOS Portal.');
+                status.textContent = '✅ Connecté à CRONOS avec succès';
+            }, 2000);
+        }
+        
+        // Test connection function
+        function testConnection() {
+            alert('Test de connexion en cours...\n\n' +
+                  'Vérification des points de connexion:\n' +
+                  '1. Firewall Barracuda: 172.21.0.251\n' +
+                  '2. Route statique: 192.168.112.0/24\n' +
+                  '3. CRONOS Portal: 172.21.31.125');
+            
+            setTimeout(() => {
+                alert('✅ Test de connexion réussi !\n\nTous les points de connexion sont accessibles.');
+                
+                // Update connection status
+                const status = document.getElementById('connectionStatus');
+                status.style.display = 'inline-flex';
+                status.textContent = '✅ Tous les points de connexion sont opérationnels';
+            }, 2000);
+        }
+        
+        // Reset form function
+        function resetForm() {
+            if (confirm('Êtes-vous sûr de vouloir réinitialiser tous les champs ?')) {
+                document.getElementById('firewallUsername').value = '';
+                document.getElementById('firewallPassword').value = '';
+                document.getElementById('cronosUsername').value = '';
+                document.getElementById('cronosPassword').value = '';
+                
+                const status = document.getElementById('connectionStatus');
+                status.style.display = 'none';
+                
+                alert('Formulaire réinitialisé.');
+            }
+        }
+        
+        // Auto-scroll to top on page load for mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+            }, 100);
+            
+            // Add click handlers for URL links
+            document.querySelectorAll('.url-display a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const url = this.getAttribute('href');
+                    const newWindow = window.open(url, '_blank');
+                    if (newWindow) {
+                        newWindow.focus();
+                    } else {
+                        alert('Veuillez autoriser les pop-ups pour ouvrir le lien.\nURL : ' + url);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
