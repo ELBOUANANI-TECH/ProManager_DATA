@@ -4,7 +4,9 @@
         { "name": "AFTN MSG", "fileName": "aftn_messages.db" }
   ],
   "aim": [
-    { "name": "Access CRONOS", "fileName": "Access_CRONOS_externe.html" }
+    { "name": "Access CRONOS", "fileName": "Access_CRONOS_externe.html" },
+    { "name": "Ajouter User", "fileName": "Ajouter_user_Aerodb.html" },
+    { "name": "Change user PW", "fileName": "Change_User_PW.html" }
   ],
   "dvolmet": [],
   "dlink": [],
