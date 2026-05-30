@@ -7,6 +7,7 @@
     { "name": "Access CRONOS", "fileName": "Access_CRONOS_externe.html" },
     { "name": "Ajouter User", "fileName": "Ajouter_User_Aerodb.html" },
     { "name": "Change user PW", "fileName": "Change_User_PW.html" },
+    { "name": "Creation cronos session", "fileName": "Creation_Cronos_session.html" },
     { "name": "Creation cronos session", "fileName": "Creation_Cronos_session.html" }
   ],
   "dvolmet": [],
