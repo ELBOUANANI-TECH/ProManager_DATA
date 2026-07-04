@@ -2,6 +2,7 @@
   "amhs": [
         { "name": "AI DADA", "fileName": "AI_Data_App_Roadmap_Detailed.pdf" },
         { "name": "AFTN MSG", "fileName": "aftn_messages.db" }
+        { "name": "CONNECTION P3 AIDA CADAS", "fileName": "CONNECTION P3 AIDA CADAS.html","user":"R.ELBOUANANI" }
   ],
   "aim": [
     { "name": "Access CRONOS", "fileName": "Access_CRONOS_externe.html" },
