@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Connexion P3 AIDA-NG à CADAS-ATS · AIDA-NG style</title>
+    <style>
+        /* === EXACT AIDA-NG MANUAL STYLE === */
+        :root {
+            --primary: #0056b3;
+            --secondary: #6c757d;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --info: #17a2b8;
+            --light: #f8f9fa;
+            --dark: #343a40;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            font-size: 15px;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: white;
+            padding: 14px;
+            border-radius: 0;
+        }
+
+        /* HEADER — exactly as AIDA manual */
+        .aida-header {
+            text-align: center;
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .aida-header .main-title {
+            color: var(--primary);
+            font-size: 1.3em;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .aida-header .sub-info {
+            margin-top: 4px;
+            font-size: 1.0em;
+            color: var(--secondary);
+            font-weight: 500;
+        }
+
+        /* TOC — exact style */
+        .toc {
+            background-color: var(--light);
+            padding: 14px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+
+        .toc h3 {
+            margin-top: 0;
+            border-bottom: none;
+            font-size: 1em;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .toc ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc li {
+            margin: 2px 0;
+        }
+
+        .toc a {
+            text-decoration: none;
+            color: var(--primary);
+            display: block;
+            padding: 8px 10px;
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 0.95em;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .toc a:active {
+            background-color: rgba(0, 86, 179, 0.15);
+        }
+
+        /* CHAPTER & headings */
+        .chapter {
+            margin-bottom: 28px;
+        }
+
+        h2 {
+            color: var(--primary);
+            padding: 10px 12px;
+            background-color: var(--light);
+            border-left: 4px solid var(--primary);
+            margin: 20px 0 12px 0;
+            font-size: 1.15em;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        h3 {
+            color: var(--secondary);
+            margin: 16px 0 8px 0;
+            padding-bottom: 5px;
+            border-bottom: 1px dashed #ddd;
+            font-size: 1.05em;
+            font-weight: 600;
+        }
+
+        h4 {
+            color: var(--dark);
+            margin: 12px 0 8px 0;
+            font-size: 0.98em;
+            font-weight: 600;
+        }
+
+        /* PROCEDURE block */
+        .procedure {
+            background-color: #f9f9f9;
+            border-left: 4px solid var(--info);
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .procedure h4 {
+            margin-top: 0;
+            font-size: 0.95em;
+            color: var(--info);
+        }
+
+        /* COMMAND — single line, horizontal scroll, exactly as AIDA */
+        .command {
+            background-color: #1a202c;
+            color: #ffffff;
+            padding: 10px 12px;
+            border-radius: 5px;
+            font-family: 'Courier New', Consolas, monospace;
+            margin: 8px 0;
+            overflow-x: auto;
+            white-space: nowrap;
+            border-left: 5px solid #ff9900;
+            font-size: 0.9em;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            -webkit-overflow-scrolling: touch;
+            display: block;
+        }
+
+        .command::-webkit-scrollbar {
+            height: 5px;
+        }
+        .command::-webkit-scrollbar-track {
+            background: #2d3748;
+            border-radius: 4px;
+        }
+        .command::-webkit-scrollbar-thumb {
+            background: #ff9900;
+            border-radius: 4px;
+        }
+
+        /* NOTE / WARNING / INFO — exact AIDA blocks */
+        .note {
+            background-color: #fff3cd;
+            border-left: 4px solid var(--warning);
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 0 5px 5px 0;
+            font-size: 0.95em;
+        }
+
+        .warning {
+            background-color: #f8d7da;
+            border-left: 4px solid var(--danger);
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 0 5px 5px 0;
+            font-size: 0.95em;
+        }
+
+        .info-block {
+            background-color: #d1ecf1;
+            border-left: 4px solid var(--info);
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 0 5px 5px 0;
+            font-size: 0.95em;
+        }
+
+        .step {
+            margin: 8px 0;
+            padding-left: 22px;
+            position: relative;
+            font-size: 0.97em;
+            line-height: 1.5;
+        }
+
+        .step:before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: var(--primary);
+            font-size: 0.75em;
+            font-weight: bold;
+        }
+
+        .back-top {
+            display: inline-block;
+            font-size: 0.8em;
+            color: var(--secondary);
+            text-decoration: none;
+            padding: 4px 0;
+            margin-top: 4px;
+        }
+
+        /* System tags */
+        .system-tag {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin: 8px 0;
+        }
+
+        .tag-aida {
+            background: #d1ecf1;
+            color: var(--primary);
+            border: 1px solid var(--info);
+        }
+
+        .tag-cadas {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        /* Section dividers */
+        .divider {
+            height: 2px;
+            background: linear-gradient(to right, var(--info), var(--success));
+            margin: 20px 0;
+            border-radius: 1px;
+        }
+
+        /* Sub-step */
+        .sub-step {
+            margin: 6px 0 6px 20px;
+            padding-left: 18px;
+            position: relative;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .sub-step:before {
+            content: "◦";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .hex-note {
+            display: inline-block;
+            background: #f3e5f5;
+            border-left: 3px solid #9C27B0;
+            padding: 4px 10px;
+            margin: 4px 0 4px 20px;
+            border-radius: 0 4px 4px 0;
+            font-size: 0.9em;
+            color: #6a1b9a;
+        }
+
+        .matching-note {
+            background: #d4edda;
+            border-left: 5px solid var(--success);
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 0 5px 5px 0;
+            font-size: 0.95em;
+        }
+
+        /* AIDA section */
+        .aida-section {
+            background: #d1ecf1;
+            border-left: 5px solid var(--info);
+            padding: 14px;
+            margin: 12px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .aida-section h2 {
+            background: transparent;
+            padding: 0 0 6px 0;
+            margin: 0 0 10px 0;
+            border-left: none;
+            border-bottom: 2px solid var(--info);
+            color: var(--primary);
+        }
+
+        .aida-section .step {
+            color: var(--dark);
+        }
+
+        /* CADAS section */
+        .cadas-section {
+            background: #d4edda;
+            border-left: 5px solid var(--success);
+            padding: 14px;
+            margin: 12px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .cadas-section h2 {
+            background: transparent;
+            padding: 0 0 6px 0;
+            margin: 0 0 10px 0;
+            border-left: none;
+            border-bottom: 2px solid var(--success);
+            color: #155724;
+        }
+
+        .cadas-section .step {
+            color: var(--dark);
+        }
+
+        .step-inner {
+            padding-left: 22px;
+            position: relative;
+        }
+
+        .step-inner:before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--primary);
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+
+        .cadas-section .step-inner:before {
+            color: var(--success);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 28px;
+            padding-top: 14px;
+            border-top: 1px solid #ddd;
+            color: var(--secondary);
+            font-size: 0.85em;
+        }
+
+        b, strong {
+            color: #c44500;
+            font-weight: 700;
+        }
+
+        .command b {
+            color: #ffcc00;
+            font-weight: 800;
+        }
+
+        .warning strong, .note strong, .info-block strong {
+            color: inherit;
+        }
+        .warning b, .note b, .info-block b {
+            color: #c44500;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            color: #856404;
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 10px; }
+            .aida-header .main-title { font-size: 1.2em; }
+            .sub-step { margin-left: 10px; }
+            .hex-note { margin-left: 10px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- HEADER exactly as AIDA manual -->
+    <div class="aida-header">
+        <div class="main-title">Connexion P3 AIDA-NG à CADAS-ATS</div>
+        <div class="sub-info">X400 P3 - Procédure de configuration</div>
+    </div>
+
+    <!-- TOC - like AIDA manual -->
+    <div class="toc" id="top">
+        <h3>📋 Table des matières</h3>
+        <ul>
+            <li><a href="#ch1">A. Configuration AIDA-NG</a></li>
+            <li><a href="#ch2">B. Configuration CADAS-ATS</a></li>
+            <li><a href="#ch3">C. Points de correspondance critiques</a></li>
+        </ul>
+    </div>
+
+    <div class="matching-note">
+        <strong>Important :</strong> De nombreux paramètres doivent correspondre exactement entre les deux systèmes.
+    </div>
+
+    <!-- CHAPITRE A - AIDA-NG -->
+    <div class="chapter" id="ch1">
+        <h2>A. Configuration AIDA-NG</h2>
+
+        <div class="system-tag tag-aida">AIDA-NG SIDE CONFIGURATION</div>
+
+        <div class="aida-section">
+            <h3>1. Créer un serveur MTS (Création OFFLINE)</h3>
+
+            <div class="step">X400 >> X400 MTS Server Table</div>
+            <div class="step">Add</div>
+            <div class="step">Create MTS Server Name</div>
+            <div class="step">Leave DN Suffix blank</div>
+
+            <div class="step">Specify Local MTA</div>
+            <div class="sub-step">MTA Name and Password already filled out, same with SYSTEM PARAMETER >> X400 >> X400 Global Settings</div>
+            <div class="sub-step">MTA PSEL = <span class="highlight">0xff</span></div>
+            <div class="sub-step">MTA SSEL = <span class="highlight">0xff</span></div>
+            <div class="sub-step">Set...</div>
+
+            <div class="step">Permanent Assoc = <span class="highlight">YES</span></div>
+            <div class="step">MTS Forced Access Enabled = <span class="highlight">No</span></div>
+            <div class="step">MTS Client PSEL = <span class="highlight">0xff</span></div>
+            <div class="step">MTS Client SSEL = <span class="highlight">0xff</span></div>
+
+            <div class="step">Transport Protocol Stack - Select VC</div>
+            <div class="sub-step">Remote TSAP/TSEL = 5033 (from SYSTEM PARAMETER >> X400 >> X400 Global Settings >> Local P3 TSAP/TSEL)</div>
+            <div class="sub-step">Select VC</div>
+            <div class="hex-note">Note: '5033'H in CADAS = 5033 decimal in AIDA-NG</div>
+            <div class="sub-step">Remote IP Add = AMHS IP add of CADAS-ATS Msg Handler</div>
+            <div class="sub-step">Remote TCP Port = 0</div>
+
+            <div class="step">Set..Set..Save</div>
+        </div>
+
+        <div class="aida-section">
+            <h3>2. Créer un utilisateur local</h3>
+
+            <div class="note"><strong>Note :</strong> Création OFFLINE mais peut être effectuée en ONLINE ou OFFLINE</div>
+
+            <div class="step">Rappel des exercices précédents</div>
+            <div class="sub-step">Identique à la création de boîte aux lettres AMHS Local</div>
+        </div>
+
+        <div class="aida-section">
+            <h3>3. Créer LA X.400 P3</h3>
+
+            <div class="note"><strong>Note :</strong> Création OFFLINE mais peut être effectuée en ONLINE ou OFFLINE</div>
+
+            <div class="step">LA table</div>
+            <div class="step">Add --> X400 P3</div>
+            <div class="step">Create LA name</div>
+
+            <div class="step">MTS Server Name >> Select</div>
+            <div class="sub-step">Sélectionner ce que vous avez créé à l'étape A.3</div>
+
+            <div class="step">Local User >> Select</div>
+
+            <div class="step">MTS User Password = assigner un mot de passe</div>
+            <div class="warning" style="margin:6px 0 6px 20px;">
+                <strong>Important :</strong> Ce mot de passe doit être copié dans CADAS-ATS étape B.8.1
+            </div>
+
+            <div class="step">Enabled</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- CHAPITRE B - CADAS-ATS -->
+        <div id="ch2">
+            <h2>B. Configuration CADAS-ATS</h2>
+
+            <div class="system-tag tag-cadas">CADAS-ATS SIDE CONFIGURATION</div>
+
+            <div class="cadas-section">
+                <h3>1. Créer un client MTS</h3>
+
+                <div class="step">Administration Terminal</div>
+                <div class="step">Parameter >> MTS Client >> Add</div>
+                <div class="step">Enabled = cocher</div>
+                <div class="step">Forced Access = décocher</div>
+
+                <div class="step">Configuration MTS Client</div>
+                <div class="sub-step">PSEL = 'f'H <span class="hex-note" style="display:inline-block; margin-left:5px;">(doit correspondre à AIDA-NG étape A.5.2 = 0xff)</span></div>
+                <div class="sub-step">SSEL = 'f'H <span class="hex-note" style="display:inline-block; margin-left:5px;">(doit correspondre à AIDA-NG étape A.5.3 = 0xff)</span></div>
+                <div class="sub-step">TSAP = '5033'H <span class="hex-note" style="display:inline-block; margin-left:5px;">(doit correspondre à AIDA-NG étape A.10.1 = 5033)</span></div>
+                <div class="sub-step">Own IP List = AMHS IP add of CADAS-ATS Msg Handler</div>
+
+                <div class="step">Configuration MTA</div>
+                <div class="sub-step">Name: (from AIDA-NG SYSTEM PARAMETER >> X400 >> X400 Global Settings >> Name)</div>
+                <div class="sub-step">Password = (from AIDA-NG SYSTEM PARAMETER >> X400 >> X400 Global Settings >> Password)</div>
+                <div class="sub-step">PSEL = 'f'H <span class="hex-note" style="display:inline-block; margin-left:5px;">(doit correspondre à AIDA-NG étape A.5.2 = 0xff)</span></div>
+                <div class="sub-step">SSEL = 'f'H <span class="hex-note" style="display:inline-block; margin-left:5px;">(doit correspondre à AIDA-NG étape A.5.3 = 0xff)</span></div>
+                <div class="sub-step">TSAP = '5033'H <span class="hex-note" style="display:inline-block; margin-left:5px;">(from AIDA-NG SYSTEM PARAMETER >> X400 >> X400 Global Settings >> Local P3 TSAP/TSEL)</span></div>
+                <div class="sub-step">IP Address = operational IP add of AIDA-NG</div>
+                <div class="sub-step">TCP Port = 102 <span class="hex-note" style="display:inline-block; margin-left:5px;">(from AIDA-NG SYSTEM PARAMETER >> X400 >> X400 Global Settings >> TCP Listen Port)</span></div>
+            </div>
+
+            <div class="cadas-section">
+                <h3>2. Créer une boîte aux lettres AMHS</h3>
+
+                <div class="step">Administration Terminal >> Parameter</div>
+                <div class="step">Mailboxes</div>
+                <div class="step">Add</div>
+                <div class="step">Group select</div>
+                <div class="step">Assigner un nom - Adresse AFTN de 8 lettres</div>
+                <div class="step">Cocher ENABLE AMHS</div>
+
+                <div class="step">Aller à AMHS >> Address</div>
+                <div class="sub-step">Address Scheme = CAAS</div>
+
+                <div class="step">Aller à AMHS >> Bind Arguments</div>
+                <div class="sub-step">MTS User Password = (copier depuis AIDA-NG étape C.6)</div>
+
+                <div class="step">MTS Client >> Sélectionner celui créé dans CADAS étape A</div>
+                <div class="step">Store and Close</div>
+            </div>
+        </div>
+
+        <!-- CHAPITRE C -->
+        <div class="chapter" id="ch3">
+            <h2>C. Points de correspondance critiques</h2>
+
+            <div class="warning">
+                <strong>Points critiques (doivent correspondre exactement) :</strong>
+                <div class="sub-step" style="margin-left:0;">1. Valeurs PSEL/SSEL (0xff dans AIDA = 'f'H dans CADAS)</div>
+                <div class="sub-step" style="margin-left:0;">2. Valeurs TSAP (5033 dans AIDA = '5033'H dans CADAS)</div>
+                <div class="sub-step" style="margin-left:0;">3. Nom/Mot de passe MTA provenant des paramètres globaux AIDA</div>
+                <div class="sub-step" style="margin-left:0;">4. Mot de passe utilisateur MTS de LA AIDA vers la boîte aux lettres CADAS</div>
+                <div class="sub-step" style="margin-left:0;">5. Les adresses IP doivent être correctes et opérationnelles</div>
+            </div>
+
+            <div class="note">
+                <strong>Conversion Hexadécimal vers Décimal :</strong>
+                <div class="sub-step" style="margin-left:0;">• 'f'H (hex) = 15 (décimal) = 0x0f (en notation AIDA)</div>
+                <div class="sub-step" style="margin-left:0;">• '5033'H (hex) = 20531 (décimal) mais CADAS l'utilise comme chaîne, AIDA utilise 5033</div>
+                <div class="sub-step" style="margin-left:0;">• Vérifier les valeurs réelles dans la documentation des deux systèmes</div>
+            </div>
+            <a class="back-top" href="#top">▲ Haut</a>
+        </div>
+
+    </div>
+
+    <footer>
+        <p><b>AIDA-NG Administrator Manual</b> · Connexion P3 AIDA-NG à CADAS-ATS · © FREQUENTIS COMSOFT 2021 | V1.0</p>
+    </footer>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(() => window.scrollTo(0, 0), 80);
+    });
+</script>
+
+</body>
+</html>
