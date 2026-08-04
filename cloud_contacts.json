@@ -1,0 +1,26 @@
+[
+  {
+    "site": "CENTRAL OFFICE",
+    "iponda": "192.168.1.10",
+    "vpn": "Active",
+    "id": "AMHS-01",
+    "name": "Technical Support",
+    "tel": "+212600000000"
+  },
+  {
+    "site": "AIRPORT STATION",
+    "iponda": "10.0.0.5",
+    "vpn": "Standby",
+    "id": "AIM-02",
+    "name": "Supervisor",
+    "tel": "0522123456"
+  },
+  {
+    "site": "REMOTE HUB",
+    "iponda": "172.16.0.1",
+    "vpn": "None",
+    "id": "UPS-NORTH",
+    "name": "Maintenance Team",
+    "tel": "1234"
+  }
+]
