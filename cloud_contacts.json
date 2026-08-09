@@ -22,5 +22,13 @@
     "id": "UPS-NORTH",
     "name": "Maintenance Team",
     "tel": "1234"
+  },
+  {
+    "site": "REMOTE server",
+    "iponda": "172.16.0.1",
+    "vpn": "None",
+    "id": "UPS-NORTH",
+    "name": "Maintenance Team",
+    "tel": "1234"
   }
 ]
